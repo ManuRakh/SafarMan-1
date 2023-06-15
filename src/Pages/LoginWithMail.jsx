@@ -12,18 +12,29 @@ export default function LoginWithMail() {
 
   const onLoginPress = async () => {
     try {
-      const response = await fetch("http://194.67.97.108:3001/v1/login", {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+      const urlencoded = new URLSearchParams();
+      urlencoded.append("email", email);
+      urlencoded.append("password", password);
+
+      const requestOptions = {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: "follow",
+      };
+
+      const response = await fetch(
+        "http://194.67.97.108:3001/v1/login",
+        requestOptions
+      );
+
       if (response.ok) {
         const data = await response.json();
-
         console.log(data);
+        navigation.navigate("Main");
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Something went wrong");

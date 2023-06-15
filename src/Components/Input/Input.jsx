@@ -1,6 +1,6 @@
-import React from 'react'
-import { View , TextInput , Image } from 'react-native'
-export default function Input({ico , placeholder}) {
+import React from "react";
+import { View, TextInput, Image } from "react-native";
+export default function Input({ ico, placeholder, value, onChangeText }) {
   return (
     <View
       style={{
@@ -14,7 +14,10 @@ export default function Input({ico , placeholder}) {
         flexDirection: "row",
       }}
     >
-      <Image style={{width:'22px' , height:'22px' , marginLeft:'12px'}}  source={require(`../../../assets/${ico}`)}/>
+      <Image
+        style={{ width: "22px", height: "22px", marginLeft: "12px" }}
+        source={require(`../../../assets/${ico}`)}
+      />
       <TextInput
         style={{
           fontSize: "15px",
@@ -25,11 +28,13 @@ export default function Input({ico , placeholder}) {
           borderRadius: "10px",
           marginLeft: "15px",
           overflow: "hidden",
-          flex:1,
-          outline:'none'
+          flex: 1,
+          outline: "none",
         }}
         placeholder={placeholder}
+        value={value}
+        onChangeText={onChangeText}
       />
     </View>
-  )
+  );
 }
