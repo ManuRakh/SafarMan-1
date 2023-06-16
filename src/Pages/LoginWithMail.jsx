@@ -3,26 +3,30 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Header from "../Components/Header/Header";
 import Input from "../Components/Input/Input";
 import { useNavigation } from "@react-navigation/native";
-
+// import config from "../../config";
+// import  jwt  from "jsonwebtoken";
 export default function LoginWithMail() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-
+  // const secretKey = config.SECRET_KEY
   const onLoginPress = async () => {
     try {
       const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+      myHeaders.append("Content-Type", "application/json");
 
       const urlencoded = new URLSearchParams();
       urlencoded.append("email", email);
       urlencoded.append("password", password);
-
+      const body = JSON.stringify({
+        email,
+        password,
+      });
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        body: urlencoded,
+        body,
         redirect: "follow",
       };
 
@@ -35,9 +39,11 @@ export default function LoginWithMail() {
         const data = await response.json();
         console.log(data);
         navigation.navigate("Main");
+        // const decoded = jwt.verify(data.token , secretKey)
+        // console.log(data.token);
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Something went wrong");
+        setError(errorData.message || "Неверная почта или пароль");
       }
     } catch (err) {
       console.error(err);

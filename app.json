@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "SafarMan",
-    "slug": "SafarMan",
+    "name": "Safarman",
+    "slug": "Safarman",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.jalolov08.SafarMan"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2713fa81-7004-4a45-a51d-c61ad4e581e8"
+      }
     }
   }
 }
