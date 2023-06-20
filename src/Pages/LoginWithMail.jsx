@@ -3,14 +3,23 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import Header from "../Components/Header/Header";
 import Input from "../Components/Input/Input";
 import { useNavigation } from "@react-navigation/native";
-// import config from "../../config";
-// import  jwt  from "jsonwebtoken";
+import config from "../../config";
+import { SignJWT, jwtVerify } from 'jose';
+
+async function verify(token, secret) {
+  const { payload } = await jwtVerify(token,new TextEncoder().encode(secret));
+  // run some checks on the returned payload, perhaps you expect some specific values
+
+  // if its all good, return it, or perhaps just return a boolean
+  return payload;
+}
+
 export default function LoginWithMail() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
-  // const secretKey = config.SECRET_KEY
+  const secretKey = config.SECRET_KEY
   const onLoginPress = async () => {
     try {
       const myHeaders = new Headers();
@@ -39,8 +48,8 @@ export default function LoginWithMail() {
         const data = await response.json();
         console.log(data);
         navigation.navigate("Main");
-        // const decoded = jwt.verify(data.token , secretKey)
-        // console.log(data.token);
+        const decoded = await verify(data.token , secretKey)
+        console.log(decoded);
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Неверная почта или пароль");
