@@ -47,9 +47,24 @@ export default function LoginWithMail() {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        navigation.navigate("Main");
+        /**
+         * Далее создаём страничку выбора роли
+         * Проверяем есть ли у юзера больше одной роли. 
+         * Если нету - то сразу переходим на главную страницу  navigation.navigate("Main");
+         * Если есть - то переходим на страницу выбора роли  navigation.navigate("ChangeRole");
+         * На странице выбора роли вытаскиваем из JWT токена объект User. Оттуда вытаскиваем User.roles массив. 
+         * Далее в зависимости от количества ролей рендерим кнопки.
+         * Как только человек выбрал роль, мы отправляем запрос на сервер с ролью и получаем новый JWT токен с ролью.(желательно но пока этого нет).
+         * Запрос будет как POST {api}/change_role, body: {role: "admin"}.
+         * В ответ на успешный запрос сервер вернет обновленный JWT токен с ролью, где стоит User.active_role = "admin".
+         * Распарсиваешь JWT в объект и записываешь в session storage.set("role": "admin")
+         * После этого переводишь человека на страницу соответствующую роли.
+         * Пример - у нас есть страница Админ Портал делаем navigation.navigate("AdminPortal");
+         * Страница путешественника - другой навигейт и так далее. 
+         */ 
         const decoded = await verify(data.token , secretKey)
         console.log(decoded);
+
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Неверная почта или пароль");

@@ -48,7 +48,16 @@ const Header = () => {
           source={require("../../../assets/searchstatus.svg")}
           style={styles.icon}
         />
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+        <TouchableOpacity onPress={() => {
+          /**
+           * session.get("token") - получаем JWT токен из session storage
+           * Если токена нету, то переводим на страницу логина navigation.navigate("Login")
+           * Если срок токена прошел - переводим на страницу логина navigation.navigate("Login")
+           * Если токен есть, то переводим на страницу профиля navigation.navigate("UserProfile")
+           * Парсим содержимое JWT токена и вытаскиваем оттуда User информацию.
+           */
+          navigation.navigate("Login")
+        }}>
           <Image
             source={require("../../../assets/user.svg")}
             style={styles.icon}
